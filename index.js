@@ -1,9 +1,11 @@
 const moment = require('moment')
+// Classes
 const Boot = require('./class/boot')
 const Tocht = require('./class/tocht')
 const Klant = require('./class/klant')
 const Weer = require('./class/weer')
 const Rekening = require('./class/rekening')
+// Arrays
 const kaartenbak = []
 const bootjes = [
   { id : 1, bezet : false },
@@ -16,6 +18,7 @@ const bootjes = [
   { id : 8, bezet : false },
   { id : 9, bezet : false }
 ]
+
 const randomId = () => Math.floor(Math.random() * (99999 - 0 + 1));
 
 
@@ -30,8 +33,8 @@ function huidigeDatum(){
   dd = datum.getDate(),
   mm = datum.getMonth() + 1,
   yyyy = datum.getFullYear();
-  if (dd < 10) dd = '0' + dd;
-  if (mm < 10) mm = '0' + mm;
+  //if (dd < 10) dd = '0' + dd;
+  //if (mm < 10) mm = '0' + mm;
   return dd + '/' + mm + '/' + yyyy;
 
 }
@@ -41,14 +44,6 @@ function huidigeTijd(){
   mm = datum.getMinutes();
   return `${hh}:${mm}`
 }
-
-function verschilTijd( begin, einde ) {
-
-  var verschil =((new Date(einde)).getTime() -(new Date(begin)).getTime()) / 1000;
-  verschil /= 60;
-  return Math.abs(Math.round( verschil ));
-
- }
 
 function bootjeBezet( id ){
   for( let i = 0; i < bootjes.length; i++ ) {
@@ -79,12 +74,25 @@ function eindeTocht( id ){
   for( let i = 0; i < kaartenbak.length; i++ ){
     if( kaartenbak.id === id ){
       kaartenbak[ i ].einde = huidigeTijd()
-      let duur = moment.duration(kaartenbak[ i ].einde.diff(kaartenbak[ i ].start));
-      return `${kaartenbak[ i ].datum}; ${duur} min`
+      let duurMin = moment.duration(kaartenbak[ i ].einde.diff(kaartenbak[ i ].start));
+      return `${kaartenbak[ i ].datum}; ${duurMin} min`
     }
   }
 }
 
+function tochtenAantal(){
+  let aantal = 0;
+  for( let tocht of kaartenbak ){
+    if( tocht.datum === huidigeDatum() ){
+      if( tocht.einde ) aantal++;
+    }
+  }
+  return aantal
+}
 
+function gemiddeldeTijdsDuur(){
+  let tochten = 0;
+  for( let tocht of kaartenbak ){
 
-console.log( moment().format('HH:mm') )
+  }
+}
